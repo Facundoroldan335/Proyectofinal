@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #e8e1f5, #dceaf5);
+    background-attachment: fixed;
+    color: #f1f1f1;
+}
+
+header {
+    background-color: blue;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #b5ff00;
+}
+
+header h1 {
+    color: #b5ff00;
+    font-size: 30px;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #b5ff00;
+}
+
+.presentacion {
+    text-align: center;
+    padding: 70px 20px;
+}
+
+.presentacion h2 {
+    font-size: 38px;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.presentacion p {
+    color: blue;
+    font-size: 18px;
+}
+
+#catalogo {
+    padding: 30px 40px;
+}
+
+#catalogo h2 {
+    margin-bottom: 25px;
+    color: green;
+    font-size: 28px;
+}
+
+.filtros {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #51456b;
+    background-color: #211c32;
+    color: white;
+    font-size: 15px;
+    outline: none;
+}
+
+.filtros input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+    border-color: #b5ff00;
+}
+
+.filtros button {
+    background-color: #b5ff00;
+    color: #151515;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filtros button:hover {
+    background-color: #d0ff66;
+    transform: translateY(-2px);
+}
+
+.peliculas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.tarjeta {
+    background-color: #211c32;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #39304d;
+    transition: 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    border-color: #b5ff00;
+    box-shadow: 0 5px 20px rgba(181, 255, 0, 0.15);
+}
+
+.tarjeta img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.contenido {
+    padding: 15px;
+}
+
+.tarjeta h3 {
+    color: #b5ff00;
+    font-size: 20px;
+    margin: 15px;
+}
+
+.tarjeta p {
+    color: #c9c9d6;
+    margin: 8px 15px;
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+    background-color: black;
+    border-top: 1px solid #39304d;
+    color: #a9a9b8;
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .presentacion h2 {
+        font-size: 28px;
+    }
+
+    #catalogo {
+        padding: 20px;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .filtros input,
+    .filtros select,
+    .filtros button {
+        width: 100%;
+    }
+}

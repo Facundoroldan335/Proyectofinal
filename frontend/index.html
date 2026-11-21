@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niflis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Niflis</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="#catalogo">Películas</a>
+        </nav>
+    </header>
+    <main>
+        <section class="presentacion">
+            <h2>Descubrí tu próxima película</h2>
+            <p>Explorá nuestro catálogo de películas.</p>
+        </section>
+        <section id="catalogo">
+            <h2>Catálogo de películas</h2>
+            <div class="filtros">
+                <inputtype="text" id="buscar" placeholder="Buscar película o director...">
+                <select id="genero">
+                    <option value="">Todos los géneros</option>
+                </select>
+                <button id="btnBuscar">Buscar</button>
+            </div>
+            <div id="peliculas" class="peliculas">
+            </div>
+        </section>
+    </main>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+    <footer>
+        <p>Niflis - Facundo Roldan</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
