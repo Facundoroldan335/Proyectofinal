@@ -153,6 +153,13 @@ nav a:hover {
     background-color: #873D3D;
 }
 
+.tarjeta button {
+    background: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
 #agregar {
     padding: 35px 20px;
 }

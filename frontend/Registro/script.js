@@ -7,7 +7,7 @@ document.getElementById("formRegistro").addEventListener("submit", async functio
         email: document.getElementById("email").value
     };
     try {
-        let respuesta = await fetch(API_URL + "/usuario/usuarios", {
+        let respuesta = await fetch(API_URL + "/usuario/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

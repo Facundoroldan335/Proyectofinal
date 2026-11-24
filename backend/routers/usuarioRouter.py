@@ -13,9 +13,11 @@ def leerUsuarios(conexion: psycopg.Connection = Depends(getConexion)):
 
 @router.post("/")
 def agregarUsuario(usuario: UsuarioModel, conexion: psycopg.Connection = Depends(getConexion)):
-    usuarioManager.agregarUsuario(usuario.nombre, usuario.email, conexion)
-    return {"mensaje": "Usuario agregado correctamente"}
-
+    id_usuario = usuarioManager.agregarUsuario(usuario.nombre, usuario.email, conexion)
+    return {
+        "mensaje": "Usuario agregado correctamente",
+        "id": str(id_usuario)
+    }
 @router.put("/{id}")
 def actualizarUsuario(id: str, usuario: UsuarioModel, conexion: psycopg.Connection = Depends(getConexion)):
     usuarioManager.actualizarUsuario(id, usuario.nombre, usuario.email, conexion)

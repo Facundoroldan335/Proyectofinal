@@ -11,8 +11,9 @@ class UsuarioManager(UsuarioInterface):
         return res
 
     def agregarUsuario(self, nombre, email, conexion: psycopg.Connection):
-        conexion.execute("""INSERT INTO "Usuario" (nombre, email) VALUES (%s, %s)""", (nombre, email))
+        res = conexion.execute("""INSERT INTO "Usuario" (nombre, email) VALUES (%s, %s) RETURNING id""",(nombre, email)).fetchone()
         conexion.commit()
+        return res["id"]
 
     def actualizarUsuario(self, id, nombre, email, conexion: psycopg.Connection):
         conexion.execute("""UPDATE "Usuario" SET nombre = %s, email = %s WHERE id = %s""", (nombre, email, id))

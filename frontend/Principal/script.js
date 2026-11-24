@@ -208,7 +208,18 @@ async function cargarPeliculas() {
             "<p>No se pudieron cargar las películas.</p>";
     }
 }
+let idUsuario = localStorage.getItem("idUsuario");
 
+if (idUsuario) {
+    let botonEliminar = document.createElement("button");
+    botonEliminar.textContent = "Eliminar";
+
+    botonEliminar.addEventListener("click", function() {
+        eliminarPelicula(pelicula.id);
+    });
+
+    tarjeta.appendChild(botonEliminar);
+}
 // Iniciar las funciones
 document.addEventListener("DOMContentLoaded", function() {
     comprobarUsuario();
