@@ -57,7 +57,7 @@ async function cargarPelicula() {
 // Cargar las reseñas de la película
 async function cargarResenas() {
     try {
-        let respuesta = await fetch(API_URL + "/resenas/resenas");
+        let respuesta = await fetch(API_URL + "/resenas/");
         if (!respuesta.ok) {
             throw new Error("No se pudieron cargar las reseñas");
         }
@@ -99,7 +99,7 @@ formularioResena.addEventListener("submit", async function(event) {
         comentario: document.getElementById("comentario").value
     };
     try {
-        let respuesta = await fetch(API_URL + "/resenas/resenas", {
+        let respuesta = await fetch(API_URL + "/resenas/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -7,21 +7,21 @@ from backend.manager.usuarioManager import UsuarioManager
 router = APIRouter(prefix="/usuario", tags=["usuario"])
 usuarioManager = UsuarioManager()
 
-@router.get("/usuarios")
+@router.get("/")
 def leerUsuarios(conexion: psycopg.Connection = Depends(getConexion)):
     return usuarioManager.leerUsuarios(conexion)
 
-@router.post("/usuarios")
+@router.post("/")
 def agregarUsuario(usuario: UsuarioModel, conexion: psycopg.Connection = Depends(getConexion)):
     usuarioManager.agregarUsuario(usuario.nombre, usuario.email, conexion)
     return {"mensaje": "Usuario agregado correctamente"}
 
-@router.put("/usuarios/{id}")
+@router.put("/{id}")
 def actualizarUsuario(id: str, usuario: UsuarioModel, conexion: psycopg.Connection = Depends(getConexion)):
     usuarioManager.actualizarUsuario(id, usuario.nombre, usuario.email, conexion)
     return {"mensaje": "Usuario actualizado correctamente"}
 
-@router.delete("/usuarios/{id}")
+@router.delete("/{id}")
 def eliminarUsuario(id: str, conexion: psycopg.Connection = Depends(getConexion)):
     usuarioManager.eliminarUsuario(id, conexion)
     return {"mensaje": "Usuario eliminado correctamente"}
