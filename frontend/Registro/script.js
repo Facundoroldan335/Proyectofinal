@@ -6,7 +6,6 @@ document.getElementById("formRegistro").addEventListener("submit", async functio
         nombre: document.getElementById("nombre").value,
         email: document.getElementById("email").value
     };
-
     try {
         let respuesta = await fetch(API_URL + "/usuario/usuarios", {
             method: "POST",
@@ -15,19 +14,16 @@ document.getElementById("formRegistro").addEventListener("submit", async functio
             },
             body: JSON.stringify(usuario)
         });
-
         if (!respuesta.ok) {
             let error = await respuesta.json();
             alert("Error al registrar: " + JSON.stringify(error));
             return;
         }
-
         let resultado = await respuesta.json();
         localStorage.setItem("idUsuario", resultado.id);
         localStorage.setItem("nombreUsuario", usuario.nombre);
         alert("Usuario registrado correctamente");
-        window.location.href = "index.html";
-
+        window.location.href = "../Principal/index.html";
     } catch (error) {
         console.log("Error:", error);
         alert("No se pudo conectar con el servidor");

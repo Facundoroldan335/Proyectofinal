@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +9,7 @@
 <body>
     <header>
         <h1>Niflis</h1>
-        <a href="index.html">Volver al catálogo</a>
+        <a href="../Principal/index.html">Volver al catálogo</a>
     </header>
     <main>
         <section id="informacionPelicula" class="informacion-pelicula">
@@ -18,6 +17,10 @@
         </section>
         <section class="seccion-resenas">
             <h2>Dejar una reseña</h2>
+            <div id="avisoRegistro" style="display: none;">
+                <p>Para publicar una reseña tenés que registrarte.</p>
+                <a href="../Registro/index.html">Registrarse</a>
+            </div>
             <form id="formResena">
                 <label for="puntaje">Puntuación</label>
                 <select id="puntaje" required>

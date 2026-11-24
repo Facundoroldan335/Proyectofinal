@@ -27,6 +27,7 @@ header h1 {
 nav {
     display: flex;
     gap: 25px;
+    align-items: center;
 }
 
 nav a {
@@ -37,6 +38,11 @@ nav a {
 
 nav a:hover {
     color: #A83232;
+}
+
+#estadoUsuario {
+    color: #E4D8CC;
+    font-size: 15px;
 }
 
 .presentacion {
@@ -111,6 +117,7 @@ nav a:hover {
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid #454545;
+    padding-bottom: 15px;
 }
 
 .tarjeta img {
@@ -118,10 +125,6 @@ nav a:hover {
     height: 320px;
     object-fit: cover;
     display: block;
-}
-
-.contenido {
-    padding: 15px;
 }
 
 .tarjeta h3 {
@@ -134,6 +137,20 @@ nav a:hover {
     color: #BDB5AE;
     margin: 8px 15px;
     font-size: 14px;
+}
+
+.tarjeta a {
+    display: inline-block;
+    margin: 12px 15px 0;
+    padding: 10px 14px;
+    background-color: #A83232;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.tarjeta a:hover {
+    background-color: #873D3D;
 }
 
 #agregar {
@@ -197,16 +214,6 @@ nav a:hover {
     color: #E4D8CC;
 }
 
-#listaGeneros label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: #353535;
-    border: 1px solid #454545;
-    border-radius: 5px;
-    padding: 9px 12px;
-    cursor: pointer;
-}
 #generoAgregar {
     padding: 13px;
     background-color: #353535;
@@ -222,10 +229,6 @@ nav a:hover {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-}
-
-#listaGeneros {
-    grid-column: 1 / -1;
 }
 
 #listaGeneros div {
@@ -244,10 +247,6 @@ nav a:hover {
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-}
-#listaGeneros input {
-    width: auto;
-    accent-color: #A83232;
 }
 
 #formPelicula button {
