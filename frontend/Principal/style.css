@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -5,14 +6,14 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: black;
-    color: #E4D8CC;
+    background: #151515;
+    color: white;
+    font-family: Arial;
 }
 
 header {
-    background-color: grey;
-    padding: 20px 40px;
+    background: #292929;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,19 +22,16 @@ header {
 
 header h1 {
     color: #A83232;
-    font-size: 30px;
 }
 
 nav {
     display: flex;
-    gap: 25px;
-    align-items: center;
+    gap: 20px;
 }
 
 nav a {
-    color: #E4D8CC;
+    color: white;
     text-decoration: none;
-    font-size: 16px;
 }
 
 nav a:hover {
@@ -41,241 +39,144 @@ nav a:hover {
 }
 
 #estadoUsuario {
-    color: #E4D8CC;
-    font-size: 15px;
+    color: white;
 }
 
 .presentacion {
     text-align: center;
-    padding: 70px 20px;
+    padding: 60px 20px;
 }
 
 .presentacion h2 {
-    font-size: 38px;
-    color: #E4D8CC;
     margin-bottom: 15px;
-}
-
-.presentacion p {
-    color: #A49B94;
-    font-size: 18px;
+    color: #A83232;
 }
 
 #catalogo {
-    padding: 30px 40px;
+    padding: 30px;
 }
 
 #catalogo h2 {
-    margin-bottom: 25px;
-    color: #E4D8CC;
-    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 .filtros {
     display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
+    gap: 10px;
+    margin-bottom: 25px;
 }
 
-.filtros input,
-.filtros select {
+input, select, textarea {
     padding: 12px;
+    background: #353535;
+    color: white;
+    border: 1px solid #555555;
     border-radius: 5px;
-    border: 1px solid #454545;
-    background-color: #292929;
-    color: #E4D8CC;
-    font-size: 15px;
 }
 
 .filtros input {
     flex: 1;
-    min-width: 220px;
 }
 
-.filtros button {
-    background-color: #A83232;
+button {
+    background: #A83232;
     color: white;
+    padding: 10px;
     border: none;
-    padding: 12px 25px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.filtros button:hover {
-    background-color: #873D3D;
+button:hover {
+    background: #8D2929;
 }
 
 .peliculas {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px;
+    gap: 20px;
 }
 
 .tarjeta {
-    background-color: #292929;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 1px solid #454545;
+    background: #292929;
+    border: 1px solid #555555;
     padding-bottom: 15px;
 }
 
 .tarjeta img {
     width: 100%;
-    height: 320px;
+    height: 300px;
     object-fit: cover;
-    display: block;
 }
 
 .tarjeta h3 {
     color: #A83232;
-    font-size: 20px;
     margin: 15px;
 }
 
 .tarjeta p {
-    color: #BDB5AE;
-    margin: 8px 15px;
-    font-size: 14px;
+    margin: 10px 15px;
 }
 
 .tarjeta a {
     display: inline-block;
-    margin: 12px 15px 0;
-    padding: 10px 14px;
-    background-color: #A83232;
+    background: #A83232;
     color: white;
+    padding: 10px;
+    margin: 10px;
     text-decoration: none;
-    border-radius: 5px;
-}
-
-.tarjeta a:hover {
-    background-color: #873D3D;
 }
 
 .tarjeta button {
-    background: red;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
+    margin: 5px;
 }
+
 #agregar {
-    padding: 35px 20px;
+    padding: 30px;
 }
 
 #agregar h2 {
-    color: #E4D8CC;
-    font-size: 28px;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    color: #A83232;
 }
 
 #formPelicula {
-    background-color: #292929;
-    max-width: 750px;
-    margin: 0 auto;
-    padding: 30px;
-    border: 1px solid #454545;
-    border-radius: 5px;
+    background: #292929;
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
 #formPelicula input,
-#formPelicula textarea {
+#formPelicula textarea,
+#formPelicula select {
     width: 100%;
-    padding: 13px;
-    border: 1px solid #454545;
-    border-radius: 5px;
-    background-color: #353535;
-    color: #E4D8CC;
-    font-family: Arial, sans-serif;
-    font-size: 15px;
-}
-
-#formPelicula input::placeholder,
-#formPelicula textarea::placeholder {
-    color: #A49B94;
 }
 
 #formPelicula textarea {
-    grid-column: 1 / -1;
-    min-height: 110px;
-    resize: vertical;
+    grid-column: 1 / 3;
 }
 
-#formPelicula h3 {
-    grid-column: 1 / -1;
-    color: #E4D8CC;
-    font-size: 18px;
-    margin-top: 5px;
-}
-
+#formPelicula h3,
 #listaGeneros {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    color: #E4D8CC;
-}
-
-#generoAgregar {
-    padding: 13px;
-    background-color: #353535;
-    color: #E4D8CC;
-    border: 1px solid #454545;
-    border-radius: 5px;
-}
-
-#btnAgregarGenero {
-    background-color: #A83232;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    grid-column: 1 / 3;
 }
 
 #listaGeneros div {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    margin-bottom: 5px;
-    background-color: #353535;
-    border-radius: 5px;
-}
-
-#listaGeneros button {
-    background-color: #A83232;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+    margin: 5px;
 }
 
 #formPelicula button {
-    grid-column: 1 / -1;
-    background-color: #A83232;
-    color: white;
-    border: none;
-    padding: 13px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#formPelicula button:hover {
-    background-color: #873D3D;
+    grid-column: 1 / 3;
 }
 
 footer {
+    background: #292929;
     text-align: center;
-    padding: 25px;
-    margin-top: 50px;
-    background-color: #292929;
-    border-top: 1px solid #454545;
-    color: #A49B94;
+    padding: 20px;
+    margin-top: 40px;
 }

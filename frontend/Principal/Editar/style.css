@@ -1,49 +1,51 @@
+
 body {
-    font-family: Arial;
-    background: black;
+    background: #151515;
     color: white;
+    font-family: Arial;
     margin: 0;
 }
 
 header {
-    background: #202020;
+    background: #292929;
     padding: 20px;
     text-align: center;
+    border-bottom: 2px solid #A83232;
 }
 
 header h1 {
-    color: violet;
+    color: #A83232;
 }
 
 header a {
     color: white;
     text-decoration: none;
-    margin: 10px;
 }
 
 main {
     width: 80%;
+    max-width: 700px;
     margin: 30px auto;
 }
 
 h2 {
-    color: violet;
+    color: #A83232;
     text-align: center;
 }
 
 form {
-    background: #202020;
-    padding: 20px;
-    border-radius: 10px;
+    background: #292929;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 input, textarea, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    background: #303030;
+    background: #353535;
     color: white;
-    border: 1px solid white;
+    border: 1px solid #555555;
+    padding: 12px;
 }
 
 textarea {
@@ -51,24 +53,32 @@ textarea {
 }
 
 button {
-    background: violet;
+    background: #A83232;
     color: white;
     padding: 10px;
     border: none;
     cursor: pointer;
-    margin: 5px;
 }
 
 button:hover {
-    background: purple;
+    background: #8D2929;
 }
 
 #listaGeneros div {
     margin: 10px 0;
 }
 
-footer {
-    text-align: center;
-    padding: 15px;
+#listaGeneros button {
+    margin-left: 10px;
+}
+
+form a {
     color: white;
+    text-align: center;
+}
+
+footer {
+    background: #292929;
+    text-align: center;
+    padding: 20px;
 }

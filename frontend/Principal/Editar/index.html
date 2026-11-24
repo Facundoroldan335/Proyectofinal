@@ -1,58 +1,47 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Niflis</title>
+    <title>Editar película - Niflis</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>Niflis</h1>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <a href="#catalogo">Películas</a>
-            <a href="../Registro/index.html" id="linkRegistro">Registrarse</a>
-            <span id="estadoUsuario"></span>
-        </nav>
+        <a href="../index.html">Volver al catálogo</a>
     </header>
+
     <main>
-        <section class="presentacion">
-            <h2>Descubrí tu próxima película</h2>
-            <p>Explorá nuestro catálogo de películas.</p>
-        </section>
-        <section id="catalogo">
-            <h2>Catálogo de películas</h2>
-            <div class="filtros">
-                <input type="text" id="buscar" placeholder="Buscar película o director...">
-                <select id="generoFiltro">
-                    <option value="">Todos los géneros</option>
-                </select>
-                <button id="btnBuscar">Buscar</button>
-            </div>
-            <div id="peliculas" class="peliculas"></div>
-        </section>
-        <section id="agregar" style="display: none;">
-            <h2>Agregar película</h2>
-            <form id="formPelicula">
-                <input type="text" id="titulo" placeholder="Título de la película" required>
-                <input type="number" id="anio" placeholder="Año" required>
-                <input type="text" id="portada" placeholder="URL de la portada" required>
-                <input type="text" id="director" placeholder="Director">
-                <textarea id="sinopsis" placeholder="Sinopsis"></textarea>
-                <h3>Seleccionar géneros</h3>
-                <select id="generoAgregar">
-                    <option value="">Seleccionar género</option>
-                </select>
-                <button type="button" id="btnAgregarGenero">Agregar género</button>
-                <div id="listaGeneros"></div>
-                <button type="submit">Guardar película</button>
-            </form>
-        </section>
+        <h2>Editar película</h2>
+
+        <form id="formEditar">
+            <input type="text" id="titulo" placeholder="Título" required>
+            <input type="number" id="anio" placeholder="Año" required>
+            <input type="text" id="portada" placeholder="URL de portada" required>
+            <input type="text" id="director" placeholder="Director">
+            <textarea id="sinopsis" placeholder="Sinopsis"></textarea>
+
+            <h3>Seleccionar géneros</h3>
+
+            <select id="genero">
+                <option value="">Seleccionar género</option>
+            </select>
+
+            <button type="button" id="btnAgregarGenero">Agregar género</button>
+
+            <div id="listaGeneros"></div>
+
+            <button type="submit">Guardar cambios</button>
+            <a href="../index.html">Cancelar</a>
+        </form>
     </main>
+
     <footer>
         <p>© Niflis - Facundo Roldan</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

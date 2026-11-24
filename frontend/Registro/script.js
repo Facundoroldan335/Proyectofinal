@@ -1,7 +1,6 @@
 const API_URL = "http://127.0.0.1:8000";
-
-document.getElementById("formRegistro").addEventListener("submit", async function(event) {
-    event.preventDefault();
+async function registrarUsuario(event) {
+    event.preventDefault()
     let usuario = {
         nombre: document.getElementById("nombre").value,
         email: document.getElementById("email").value
@@ -15,8 +14,7 @@ document.getElementById("formRegistro").addEventListener("submit", async functio
             body: JSON.stringify(usuario)
         });
         if (!respuesta.ok) {
-            let error = await respuesta.json();
-            alert("Error al registrar: " + JSON.stringify(error));
+            alert("No se pudo registrar el usuario");
             return;
         }
         let resultado = await respuesta.json();
@@ -25,7 +23,10 @@ document.getElementById("formRegistro").addEventListener("submit", async functio
         alert("Usuario registrado correctamente");
         window.location.href = "../Principal/index.html";
     } catch (error) {
-        console.log("Error:", error);
+        console.log(error);
         alert("No se pudo conectar con el servidor");
     }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("formRegistro").addEventListener("submit", registrarUsuario);
 });
