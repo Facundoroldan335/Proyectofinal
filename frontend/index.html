@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,31 +14,50 @@
             <a href="#catalogo">Películas</a>
         </nav>
     </header>
+
     <main>
         <section class="presentacion">
             <h2>Descubrí tu próxima película</h2>
             <p>Explorá nuestro catálogo de películas.</p>
         </section>
+
         <section id="catalogo">
             <h2>Catálogo de películas</h2>
+
             <div class="filtros">
-                <inputtype="text" id="buscar" placeholder="Buscar película o director...">
-                <select id="genero">
+                <input type="text" id="buscar" placeholder="Buscar película o director...">
+
+                <select id="generoFiltro">
                     <option value="">Todos los géneros</option>
                 </select>
+
                 <button id="btnBuscar">Buscar</button>
             </div>
-            <div id="peliculas" class="peliculas">
-            </div>
+
+            <div id="peliculas" class="peliculas"></div>
         </section>
     </main>
-    <br><br>
-    <br><br>
-    <br><br>
-    <br><br>
-    <br><br>
+
+    <section id="agregar">
+        <h2>Agregar película</h2>
+
+        <form id="formPelicula">
+            <input type="text" id="titulo" placeholder="Título de la película" required>
+            <input type="number" id="anio" placeholder="Año" required>
+            <input type="text" id="portada" placeholder="URL de la portada" required>
+            <input type="text" id="director" placeholder="Director">
+            <textarea id="sinopsis" placeholder="Sinopsis"></textarea>
+            <h3>Seleccionar géneros</h3>
+            <select id="generoAgregar">
+                <option value="">Seleccionar género</option>
+            </select>
+            <button type="button" id="btnAgregarGenero">Agregar género</button>
+            <div id="listaGeneros"></div>
+            <button type="submit">Guardar película</button>
+        </form>
+    </section>
     <footer>
-        <p>Niflis - Facundo Roldan</p>
+        <p>© Niflis - Facundo Roldan</p>
     </footer>
     <script src="script.js"></script>
 </body>

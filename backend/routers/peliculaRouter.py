@@ -2,32 +2,44 @@ from fastapi import APIRouter, Depends, HTTPException
 from conexion import getConexion
 from backend.model.peliculaModel import PeliculaModel
 from backend.manager.peliculaManager import PeliculaManager
-
 import psycopg
 
 router = APIRouter(prefix="/peliculas", tags=["peliculas"])
 
 peliculaManager = PeliculaManager()
 
-@router.get("/peliculas")
+
+@router.get("/")
 def leerPeliculas(conexion: psycopg.Connection = Depends(getConexion)):
     return peliculaManager.leerPeliculas(conexion)
 
-@router.post("/peliculas")
-def agregarPelicula(pelicula:PeliculaModel, conexion: psycopg.Connection = Depends(getConexion)):
-    peliculaManager.agregarPelicula(pelicula, conexion)
-    return{"mensaje": "Pelicula agregada correctamente"}
 
-@router.put("/peliculas{id}")
-def actualizarPeliculas(id:int, pelicula:PeliculaModel, conexion: psycopg.Connection = Depends(getConexion)):
-    resultado = peliculaManager.actualizarPelicula(id, pelicula, conexion)
-    if resultado == 0:
-        raise HTTPException(status_code=404, detail="Pelicula no encontrada")
-    return{"mensaje": "Pelicula actualizada correctamente"}
+@router.post("/")
+def agregarPelicula(
+    pelicula: PeliculaModel,
+    conexion: psycopg.Connection = Depends(getConexion)
+):
+    try:
+        peliculaManager.agregarPelicula(pelicula, conexion)
+        return {"mensaje": "Película agregada correctamente"}
+    except Exception as error:
+        raise HTTPException(status_code=500, detail=str(error))
 
-@router.delete("/peliculas{id}")
-def eliminarPelicula(id: int, pelicula:PeliculaModel, conexion: psycopg.Connection = Depends(getConexion)):
-    resultado = peliculaManager.eliminarPelicula(id, pelicula, conexion)
-    if resultado == 0:
-        raise HTTPException(status_code=404, detail="Pelicula no encontrada")
-    return{"mensaje": "Pelicula eliminada correctamente"}
+
+@router.put("/{id}")
+def actualizarPelicula(
+    id: str,
+    pelicula: PeliculaModel,
+    conexion: psycopg.Connection = Depends(getConexion)
+):
+    peliculaManager.actualizarPelicula(id, pelicula, conexion)
+    return {"mensaje": "Película actualizada correctamente"}
+
+
+@router.delete("/{id}")
+def eliminarPelicula(
+    id: str,
+    conexion: psycopg.Connection = Depends(getConexion)
+):
+    peliculaManager.eliminarPelicula(id, conexion)
+    return {"mensaje": "Película eliminada correctamente"}
