@@ -7,6 +7,9 @@ let generosElegidos = [];
 async function cargarPelicula() {
     try {
         let respuesta = await fetch(API_URL + "/peliculas/");
+        if (!respuesta.ok) {
+            throw new Error("El servidor respondió " + respuesta.status);
+        }
         let peliculas = await respuesta.json();
 
         let pelicula = null;
@@ -40,6 +43,9 @@ async function cargarPelicula() {
 async function cargarGeneros() {
     try {
         let respuesta = await fetch(API_URL + "/genero/");
+        if (!respuesta.ok) {
+            throw new Error("El servidor respondió " + respuesta.status);
+        }
         let generos = await respuesta.json();
         let selector = document.getElementById("genero");
 

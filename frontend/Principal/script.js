@@ -9,20 +9,25 @@ function comprobarUsuario() {
     document.getElementById("agregar").style.display = registrado ? "block" : "none";
     document.getElementById("linkRegistro").style.display = registrado ? "inline" : "none";
     estado.textContent = registrado ? "Cerrar sesión" : "";
-    estado.style.cursor = "pointer";
+    estado.style.cursor = registrado ? "pointer" : "default";
+    estado.tabIndex = registrado ? 0 : -1;
 }
 
 function cerrarSesion() {
     if (!localStorage.getItem("idUsuario")) {
         return;
     }
-    localStorage.clear();
+    localStorage.removeItem("idUsuario");
+    localStorage.removeItem("nombreUsuario");
     window.location.reload();
 }
 
 async function cargarGeneros() {
     try {
         let respuesta = await fetch(API_URL + "/genero/");
+        if (!respuesta.ok) {
+            throw new Error("El servidor respondió " + respuesta.status);
+        }
         let generos = await respuesta.json();
         let filtro = document.getElementById("generoFiltro");
         let selector = document.getElementById("generoAgregar");
@@ -173,6 +178,9 @@ function buscarPeliculas() {
 async function cargarPeliculas() {
     try {
         let respuesta = await fetch(API_URL + "/peliculas/");
+        if (!respuesta.ok) {
+            throw new Error("El servidor respondió " + respuesta.status);
+        }
         peliculasCargadas = await respuesta.json();
         buscarPeliculas();
     } catch (error) {
@@ -186,7 +194,11 @@ async function eliminarPelicula(id) {
         return;
     }
     try {
-        await fetch(API_URL + "/peliculas/" + id, { method: "DELETE" });
+        let respuesta = await fetch(API_URL + "/peliculas/" + id, { method: "DELETE" });
+        if (!respuesta.ok) {
+            alert("No se pudo eliminar la película");
+            return;
+        }
         alert("Película eliminada correctamente");
         cargarPeliculas();
     } catch (error) {
@@ -202,6 +214,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btnBuscar").addEventListener("click", buscarPeliculas);
     document.getElementById("generoFiltro").addEventListener("change", buscarPeliculas);
     document.getElementById("estadoUsuario").addEventListener("click", cerrarSesion);
+    document.getElementById("estadoUsuario").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            cerrarSesion();
+        }
+    });
     document.getElementById("buscar").addEventListener("input", function () {
         if (document.getElementById("buscar").value === "") {
             buscarPeliculas();

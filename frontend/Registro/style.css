@@ -1,3 +1,5 @@
+/* estilos del registro */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,82 +7,84 @@
 }
 
 body {
-    background: #151515;
-    color: #FFFFFF;
+    background: black;
+    color: white;
     font-family: Arial, sans-serif;
 }
 
+/* barra de arriba */
+
 header {
-    padding: 25px;
-    background: #292929;
-    text-align: center;
-    border-bottom: 2px solid #A83232;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 28px;
+    background: dimgray;
+    border-bottom: 2px solid red;
 }
 
 header h1 {
-    margin-bottom: 8px;
-    color: #A83232;
+    color: red;
+    font-size: 25px;
 }
 
 header p {
-    color: #BBBBBB;
+    color: lightgray;
+    font-size: 14px;
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70vh;
-    padding: 25px;
-}
-
-.registro {
-    width: 100%;
-    max-width: 430px;
+    width: 90%;
+    max-width: 440px;
+    margin: 30px auto;
 }
 
 .registro h2 {
     margin-bottom: 10px;
-    color: #A83232;
+    color: red;
     text-align: center;
 }
 
 .registro p {
-    margin-bottom: 15px;
-    color: #BBBBBB;
+    margin-bottom: 16px;
+    color: lightgray;
+    font-size: 14px;
     text-align: center;
 }
 
-input {
-    padding: 10px;
-    background: #353535;
-    color: #FFFFFF;
-    border: 1px solid #555555;
-    border-radius: 10px;
-    font-family: Arial, sans-serif;
-}
-
-button {
-    padding: 11px;
-    background: #A83232;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #8D2929;
-}
+/* el formulario */
 
 #formRegistro {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding: 25px;
-    background: #292929;
-    border: 1px solid #444444;
+    gap: 12px;
+    padding: 22px;
+    background: dimgray;
+    border: 1px solid darkgray;
     border-radius: 10px;
+}
+
+input {
+    padding: 10px;
+    background: gray;
+    color: white;
+    border: 1px solid silver;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+button {
+    padding: 10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: darkred;
 }
 
 .campo {
@@ -90,15 +94,17 @@ button:hover {
 }
 
 label {
-    color: #BBBBBB;
+    color: lightgray;
     font-size: 14px;
 }
 
+/* pie */
+
 footer {
-    margin-top: 40px;
-    padding: 20px;
-    background: #292929;
+    margin-top: 35px;
+    padding: 18px;
+    background: dimgray;
     text-align: center;
-    color: #BBBBBB;
-    font-size: 14px;
+    color: silver;
+    font-size: 13px;
 }

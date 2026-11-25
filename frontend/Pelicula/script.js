@@ -19,6 +19,9 @@ function comprobarUsuario() {
 async function cargarPelicula() {
     try {
         let respuesta = await fetch(API_URL + "/peliculas/");
+        if (!respuesta.ok) {
+            throw new Error("El servidor respondió " + respuesta.status);
+        }
         let peliculas = await respuesta.json();
 
         let pelicula = null;
@@ -47,6 +50,7 @@ async function cargarPelicula() {
         `;
     } catch (error) {
         console.log(error);
+        document.getElementById("informacionPelicula").innerHTML = "<p>No se pudo cargar la película.</p>";
     }
 }
 
@@ -68,6 +72,9 @@ function obtenerGeneros(pelicula) {
 async function cargarResenas() {
     try {
         let respuesta = await fetch(API_URL + "/resenas/");
+        if (!respuesta.ok) {
+            throw new Error("El servidor respondió " + respuesta.status);
+        }
         let resenas = await respuesta.json();
         let html = "";
 
@@ -94,6 +101,7 @@ async function cargarResenas() {
         document.getElementById("resenas").innerHTML = html;
     } catch (error) {
         console.log(error);
+        document.getElementById("resenas").innerHTML = "<p>No se pudieron cargar las reseñas.</p>";
     }
 }
 
@@ -133,13 +141,10 @@ async function publicarResena(event) {
         alert("Error al conectar con el servidor");
     }
 }
-
 // Arranca la pagina
 document.addEventListener("DOMContentLoaded", function () {
     comprobarUsuario();
-
     document.getElementById("formResena").addEventListener("submit", publicarResena);
-
     cargarPelicula();
     cargarResenas();
 });

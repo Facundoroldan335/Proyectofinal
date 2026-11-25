@@ -1,3 +1,5 @@
+/* estilos generales */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,42 +7,46 @@
 }
 
 body {
-    background: #151515;
-    color: #FFFFFF;
+    background: black;
+    color: white;
     font-family: Arial, sans-serif;
 }
+
+/* barra de arriba */
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    background: #292929;
-    border-bottom: 2px solid #A83232;
+    padding: 15px 28px;
+    background: dimgray;
+    border-bottom: 2px solid red;
 }
 
 header h1 {
-    color: #A83232;
-    font-size: 24px;
+    color: red;
+    font-size: 25px;
 }
 
 nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 18px;
 }
 
 nav a {
-    color: #FFFFFF;
+    color: white;
+    font-size: 14px;
     text-decoration: none;
 }
 
 nav a:hover {
-    color: #A83232;
+    color: red;
 }
 
 #estadoUsuario {
-    color: #BBBBBB;
+    color: lightgray;
+    font-size: 14px;
 }
 
 main {
@@ -57,53 +63,58 @@ input,
 select,
 textarea {
     padding: 10px;
-    background: #353535;
-    color: #FFFFFF;
-    border: 1px solid #555555;
-    border-radius: 10px;
+    background: gray;
+    color: white;
+    border: 1px solid silver;
+    border-radius: 8px;
     font-family: Arial, sans-serif;
+    font-size: 14px;
 }
 
 button {
     padding: 10px 15px;
-    background: #A83232;
-    color: #FFFFFF;
+    background: red;
+    color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 6px;
     cursor: pointer;
 }
 
 button:hover {
-    background: #8D2929;
+    background: darkred;
 }
 
+/* texto de arriba */
+
 .presentacion {
-    padding: 40px 0;
+    padding: 35px 0;
     text-align: center;
 }
 
 .presentacion h2 {
-    color: #A83232;
+    color: red;
 }
 
 .presentacion p {
-    color: #BBBBBB;
+    color: lightgray;
 }
+
+/* catalogo */
 
 #catalogo,
 #agregar {
-    padding: 25px 0;
+    padding: 22px 0;
 }
 
 #agregar h2 {
-    color: #A83232;
+    color: red;
     text-align: center;
 }
 
 .filtros {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 9px;
+    margin-bottom: 18px;
 }
 
 .filtros input {
@@ -113,65 +124,69 @@ button:hover {
 .peliculas {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    gap: 18px;
 }
+
+/* las tarjetas */
 
 .tarjeta {
     padding: 12px;
-    background: #292929;
-    border: 1px solid #444444;
+    background: dimgray;
+    border: 1px solid darkgray;
     border-radius: 10px;
 }
 
 .tarjeta img {
     width: 100%;
-    height: 300px;
+    height: 290px;
     object-fit: cover;
     border-radius: 10px;
 }
 
 .tarjeta h3 {
-    margin: 12px 0 6px;
-    color: #A83232;
+    margin: 10px 0 6px;
+    color: red;
     font-size: 18px;
 }
 
 .tarjeta p {
-    margin: 4px 0;
-    color: #BBBBBB;
+    margin-bottom: 4px;
+    color: lightgray;
     font-size: 14px;
 }
 
 .tarjeta a {
     display: block;
-    margin-top: 12px;
+    margin-top: 10px;
     padding: 9px;
-    background: #A83232;
-    color: #FFFFFF;
+    background: red;
+    color: white;
     text-align: center;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .tarjeta a:hover {
-    background: #8D2929;
+    background: darkred;
 }
 
 .tarjeta button {
     margin-top: 8px;
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 8px 11px;
+    font-size: 13px;
 }
+
+/* formulario de pelicula */
 
 #formPelicula {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    max-width: 700px;
+    max-width: 680px;
     margin: auto;
-    padding: 25px;
-    background: #292929;
-    border: 1px solid #444444;
+    padding: 22px;
+    background: dimgray;
+    border: 1px solid darkgray;
     border-radius: 10px;
 }
 
@@ -183,15 +198,15 @@ button:hover {
 }
 
 #formPelicula textarea {
-    height: 90px;
+    height: 85px;
 }
 
 #formPelicula h3 {
-    font-size: 16px;
+    font-size: 15px;
 }
 
-#formPelicula #btnAgregarGenero {
-    background: #555555;
+#btnAgregarGenero {
+    background: gray;
 }
 
 #listaGeneros div {
@@ -199,22 +214,24 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
-    padding: 8px 12px;
-    background: #353535;
-    border-radius: 10px;
+    padding: 8px 11px;
+    background: gray;
+    border-radius: 8px;
 }
 
 #listaGeneros button {
-    padding: 4px 10px;
-    background: #555555;
-    font-size: 13px;
+    padding: 4px 9px;
+    background: darkgray;
+    font-size: 12px;
 }
 
+/* pie */
+
 footer {
-    margin-top: 40px;
-    padding: 20px;
-    background: #292929;
+    margin-top: 35px;
+    padding: 18px;
+    background: dimgray;
     text-align: center;
-    color: #BBBBBB;
-    font-size: 14px;
+    color: silver;
+    font-size: 13px;
 }

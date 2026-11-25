@@ -1,4 +1,5 @@
 const API_URL = "http://127.0.0.1:8000";
+
 async function registrarUsuario(event) {
     event.preventDefault();
     let usuario = {
@@ -12,6 +13,7 @@ async function registrarUsuario(event) {
             body: JSON.stringify(usuario)
         });
         if (!respuesta.ok) {
+            console.log("El servidor respondió " + respuesta.status);
             alert("No se pudo registrar el usuario");
             return;
         }
@@ -25,6 +27,7 @@ async function registrarUsuario(event) {
         alert("No se pudo conectar con el servidor");
     }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("formRegistro").addEventListener("submit", registrarUsuario);
 });
