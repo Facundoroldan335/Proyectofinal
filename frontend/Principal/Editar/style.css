@@ -1,62 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     background: #151515;
-    color: white;
-    font-family: Arial;
-    margin: 0;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
 }
 
 header {
+    padding: 25px;
     background: #292929;
-    padding: 20px;
     text-align: center;
     border-bottom: 2px solid #A83232;
 }
 
 header h1 {
+    margin-bottom: 8px;
     color: #A83232;
 }
 
-header a {
-    color: white;
-    text-decoration: none;
+header p {
+    color: #BBBBBB;
 }
 
 main {
-    width: 80%;
-    max-width: 700px;
-    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 25px;
 }
 
-h2 {
+.registro {
+    width: 100%;
+    max-width: 430px;
+}
+
+.registro h2 {
+    margin-bottom: 10px;
     color: #A83232;
     text-align: center;
 }
 
-form {
-    background: #292929;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.registro p {
+    margin-bottom: 15px;
+    color: #BBBBBB;
+    text-align: center;
 }
 
-input, textarea, select {
+input {
+    padding: 10px;
     background: #353535;
-    color: white;
+    color: #FFFFFF;
     border: 1px solid #555555;
-    padding: 12px;
-}
-
-textarea {
-    height: 100px;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
 }
 
 button {
+    padding: 11px;
     background: #A83232;
-    color: white;
-    padding: 10px;
+    color: #FFFFFF;
     border: none;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -64,21 +73,32 @@ button:hover {
     background: #8D2929;
 }
 
-#listaGeneros div {
-    margin: 10px 0;
+#formRegistro {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px;
+    background: #292929;
+    border: 1px solid #444444;
+    border-radius: 10px;
 }
 
-#listaGeneros button {
-    margin-left: 10px;
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-form a {
-    color: white;
-    text-align: center;
+label {
+    color: #BBBBBB;
+    font-size: 14px;
 }
 
 footer {
+    margin-top: 40px;
+    padding: 20px;
     background: #292929;
     text-align: center;
-    padding: 20px;
+    color: #BBBBBB;
+    font-size: 14px;
 }

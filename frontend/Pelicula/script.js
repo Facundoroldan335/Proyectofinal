@@ -1,10 +1,8 @@
-
 const API_URL = "http://127.0.0.1:8000";
 
-let parametros = new URLSearchParams(window.location.search);
-let idPelicula = parametros.get("id");
+let idPelicula = new URLSearchParams(window.location.search).get("id");
 
-// Comprobar si el usuario está registrado
+// Muestra el formulario de reseña solo si se registro
 function comprobarUsuario() {
     let idUsuario = localStorage.getItem("idUsuario");
 
@@ -17,25 +15,25 @@ function comprobarUsuario() {
     }
 }
 
-// Cargar información de la película
+// Trae la pelicula y la muestra
 async function cargarPelicula() {
     try {
         let respuesta = await fetch(API_URL + "/peliculas/");
         let peliculas = await respuesta.json();
 
-        let pelicula = peliculas.find(function(p) {
-            return String(p.id) === String(idPelicula);
-        });
+        let pelicula = null;
+        for (let i = 0; i < peliculas.length; i++) {
+            if (String(peliculas[i].id) === String(idPelicula)) {
+                pelicula = peliculas[i];
+            }
+        }
 
-        if (!pelicula) {
-            document.getElementById("informacionPelicula").innerHTML =
-                "<p>No se encontró la película.</p>";
+        if (pelicula === null) {
+            document.getElementById("informacionPelicula").innerHTML = "<p>No se encontró la película.</p>";
             return;
         }
 
-        let generos = (pelicula.generos || []).map(function(g) {
-            return typeof g === "object" ? g.nombre : g;
-        }).join(", ");
+        let generos = obtenerGeneros(pelicula);
 
         document.getElementById("informacionPelicula").innerHTML = `
             <img src="${pelicula.portada}" alt="Portada">
@@ -44,63 +42,72 @@ async function cargarPelicula() {
                 <p><strong>Año:</strong> ${pelicula.anio}</p>
                 <p><strong>Director:</strong> ${pelicula.director || "No especificado"}</p>
                 <p><strong>Sinopsis:</strong> ${pelicula.sinopsis || "Sin sinopsis"}</p>
-                <p><strong>Géneros:</strong> ${generos || "Sin géneros"}</p>
+                <p><strong>Géneros:</strong> ${generos}</p>
             </div>
         `;
-
     } catch (error) {
         console.log(error);
     }
 }
 
-// Cargar reseñas
+// Junta los nombres de los generos
+function obtenerGeneros(pelicula) {
+    if (!pelicula.generos || pelicula.generos.length === 0) {
+        return "Sin géneros";
+    }
+
+    let nombres = [];
+    for (let i = 0; i < pelicula.generos.length; i++) {
+        nombres.push(pelicula.generos[i].nombre);
+    }
+
+    return nombres.join(", ");
+}
+
+// Muestra las reseñas de esta pelicula
 async function cargarResenas() {
     try {
         let respuesta = await fetch(API_URL + "/resenas/");
         let resenas = await respuesta.json();
+        let html = "";
 
-        let lista = document.getElementById("resenas");
-        lista.innerHTML = "";
+        for (let i = 0; i < resenas.length; i++) {
+            if (String(resenas[i].id_pelicula) === String(idPelicula)) {
+                let comentario = resenas[i].comentario;
+                if (!comentario) {
+                    comentario = "Sin comentario";
+                }
 
-        let encontradas = resenas.filter(function(resena) {
-            return String(resena.id_pelicula) === String(idPelicula);
-        });
-
-        if (encontradas.length === 0) {
-            lista.innerHTML = "<p>Todavía no hay reseñas.</p>";
-            return;
+                html = html + `
+                    <div class="resena">
+                        <h3>Puntuación: ${resenas[i].puntaje}/5</h3>
+                        <p>${comentario}</p>
+                    </div>
+                `;
+            }
         }
 
-        encontradas.forEach(function(resena) {
-            let elemento = document.createElement("div");
-            elemento.className = "resena";
+        if (html === "") {
+            html = "<p>Todavía no hay reseñas.</p>";
+        }
 
-            elemento.innerHTML = `
-                <h3>Puntuación: ${resena.puntaje}/5</h3>
-                <p>${resena.comentario || "Sin comentario"}</p>
-            `;
-
-            lista.appendChild(elemento);
-        });
-
+        document.getElementById("resenas").innerHTML = html;
     } catch (error) {
         console.log(error);
     }
 }
 
-// Publicar reseña
+// Guarda la reseña nueva
 async function publicarResena(event) {
     event.preventDefault();
 
-    let idUsuario = localStorage.getItem("idUsuario");
-
-    if (!idUsuario) {
+    if (!localStorage.getItem("idUsuario")) {
         alert("Tenés que registrarte primero");
         return;
     }
 
     let resena = {
-        id_usuario: idUsuario,
+        id_usuario: localStorage.getItem("idUsuario"),
         id_pelicula: idPelicula,
         puntaje: Number(document.getElementById("puntaje").value),
         comentario: document.getElementById("comentario").value
@@ -109,9 +116,7 @@ async function publicarResena(event) {
     try {
         let respuesta = await fetch(API_URL + "/resenas/", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(resena)
         });
 
@@ -123,15 +128,14 @@ async function publicarResena(event) {
         alert("Reseña publicada correctamente");
         document.getElementById("formResena").reset();
         cargarResenas();
-
     } catch (error) {
         console.log(error);
         alert("Error al conectar con el servidor");
     }
 }
 
-// Iniciar
-document.addEventListener("DOMContentLoaded", function() {
+// Arranca la pagina
+document.addEventListener("DOMContentLoaded", function () {
     comprobarUsuario();
 
     document.getElementById("formResena").addEventListener("submit", publicarResena);

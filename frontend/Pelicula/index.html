@@ -13,7 +13,7 @@
     </header>
     <main>
         <section id="informacionPelicula" class="informacion-pelicula">
-            <!-- La información se carga desde JavaScript -->
+            <!-- La completa script.js -->
         </section>
         <section class="seccion-resenas">
             <h2>Dejar una reseña</h2>
@@ -22,24 +22,28 @@
                 <a href="../Registro/index.html">Registrarse</a>
             </div>
             <form id="formResena">
-                <label for="puntaje">Puntuación</label>
-                <select id="puntaje" required>
-                    <option value="">Seleccioná una puntuación</option>
-                    <option value="1">1 - Muy mala</option>
-                    <option value="2">2 - Mala</option>
-                    <option value="3">3 - Regular</option>
-                    <option value="4">4 - Buena</option>
-                    <option value="5">5 - Excelente</option>
-                </select>
-                <label for="comentario">Comentario</label>
-                <textarea id="comentario" placeholder="Escribí tu opinión sobre la película..." required></textarea>
+                <div class="campo">
+                    <label for="puntaje">Puntuación</label>
+                    <select id="puntaje" required>
+                        <option value="">Seleccioná una puntuación</option>
+                        <option value="1">1 - Muy mala</option>
+                        <option value="2">2 - Mala</option>
+                        <option value="3">3 - Regular</option>
+                        <option value="4">4 - Buena</option>
+                        <option value="5">5 - Excelente</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="comentario">Comentario</label>
+                    <textarea id="comentario" placeholder="Escribí tu opinión sobre la película..." required></textarea>
+                </div>
                 <button type="submit">Publicar reseña</button>
             </form>
         </section>
         <section class="lista-resenas">
             <h2>Reseñas de usuarios</h2>
             <div id="resenas">
-                <!-- Las reseñas se cargan desde JavaScript -->
+                <!-- Las completa script.js -->
             </div>
         </section>
     </main>

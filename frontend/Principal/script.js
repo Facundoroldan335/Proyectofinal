@@ -1,291 +1,212 @@
-
 const API_URL = "http://127.0.0.1:8000";
 
-let generosSeleccionados = [];
+let generosElegidos = [];
 let peliculasCargadas = [];
 
-// Comprobar si el usuario está registrado
 function comprobarUsuario() {
-    let idUsuario = localStorage.getItem("idUsuario");
-    let nombreUsuario = localStorage.getItem("nombreUsuario");
-
-    if (idUsuario) {
-        document.getElementById("agregar").style.display = "block";
-        document.getElementById("linkRegistro").style.display = "none";
-        document.getElementById("estadoUsuario").textContent = "Hola, " + nombreUsuario;
-    } else {
-        document.getElementById("agregar").style.display = "none";
-        document.getElementById("linkRegistro").style.display = "inline";
-        document.getElementById("estadoUsuario").textContent = "";
-    }
+    let registrado = localStorage.getItem("idUsuario");
+    let estado = document.getElementById("estadoUsuario");
+    document.getElementById("agregar").style.display = registrado ? "block" : "none";
+    document.getElementById("linkRegistro").style.display = registrado ? "inline" : "none";
+    estado.textContent = registrado ? "Cerrar sesión" : "";
+    estado.style.cursor = "pointer";
 }
 
-// Cargar géneros
+function cerrarSesion() {
+    if (!localStorage.getItem("idUsuario")) {
+        return;
+    }
+    localStorage.clear();
+    window.location.reload();
+}
+
 async function cargarGeneros() {
     try {
         let respuesta = await fetch(API_URL + "/genero/");
         let generos = await respuesta.json();
-
         let filtro = document.getElementById("generoFiltro");
         let selector = document.getElementById("generoAgregar");
-
-        generos.forEach(function(genero) {
-            let opcion1 = document.createElement("option");
-            opcion1.value = genero.id;
-            opcion1.textContent = genero.nombre;
-            filtro.appendChild(opcion1);
-
-            let opcion2 = document.createElement("option");
-            opcion2.value = genero.id;
-            opcion2.textContent = genero.nombre;
-            selector.appendChild(opcion2);
-        });
-
+        for (let i = 0; i < generos.length; i++) {
+            filtro.appendChild(new Option(generos[i].nombre, generos[i].id));
+            selector.appendChild(new Option(generos[i].nombre, generos[i].id));
+        }
     } catch (error) {
-        console.log("Error al cargar géneros:", error);
+        console.log("Error al cargar los generos", error);
     }
 }
 
-// Agregar género a la película
 function agregarGenero() {
     let selector = document.getElementById("generoAgregar");
-    let id = selector.value;
-
-    if (id === "") {
+    if (selector.value === "") {
         alert("Seleccioná un género");
         return;
     }
-
-    let existe = generosSeleccionados.some(function(genero) {
-        return String(genero.id) === String(id);
-    });
-
-    if (existe) {
-        alert("Ese género ya está agregado");
-        return;
+    for (let i = 0; i < generosElegidos.length; i++) {
+        if (String(generosElegidos[i].id) === String(selector.value)) {
+            alert("Ese género ya está agregado");
+            return;
+        }
     }
-
-    generosSeleccionados.push({
-        id: id,
-        nombre: selector.options[selector.selectedIndex].text
-    });
-
+    let nombre = selector.options[selector.selectedIndex].text;
+    generosElegidos.push({ id: selector.value, nombre: nombre });
     mostrarGeneros();
     selector.value = "";
 }
 
-// Mostrar géneros seleccionados
-function mostrarGeneros() {
-    let lista = document.getElementById("listaGeneros");
-    lista.innerHTML = "";
-
-    generosSeleccionados.forEach(function(genero, indice) {
-        let elemento = document.createElement("div");
-        elemento.textContent = genero.nombre;
-
-        let boton = document.createElement("button");
-        boton.type = "button";
-        boton.textContent = "Quitar";
-
-        boton.addEventListener("click", function() {
-            generosSeleccionados.splice(indice, 1);
-            mostrarGeneros();
-        });
-
-        elemento.appendChild(boton);
-        lista.appendChild(elemento);
-    });
+function quitarGenero(posicion) {
+    generosElegidos.splice(posicion, 1);
+    mostrarGeneros();
 }
 
-// Agregar película
+function mostrarGeneros() {
+    let html = "";
+    for (let i = 0; i < generosElegidos.length; i++) {
+        html += `<div>${generosElegidos[i].nombre}
+        <button type="button" onclick="quitarGenero(${i})">Quitar</button></div>`;
+    }
+    document.getElementById("listaGeneros").innerHTML = html;
+}
+
 async function agregarPelicula(event) {
     event.preventDefault();
-
     if (!localStorage.getItem("idUsuario")) {
         alert("Tenés que registrarte primero");
         return;
     }
-
+    let idsGeneros = [];
+    for (let i = 0; i < generosElegidos.length; i++) {
+        idsGeneros.push(generosElegidos[i].id);
+    }
     let pelicula = {
         titulo: document.getElementById("titulo").value,
         anio: Number(document.getElementById("anio").value),
         portada: document.getElementById("portada").value,
         director: document.getElementById("director").value,
         sinopsis: document.getElementById("sinopsis").value,
-        generos: generosSeleccionados.map(function(genero) {
-            return genero.id;
-        })
+        generos: idsGeneros
     };
-
     try {
         let respuesta = await fetch(API_URL + "/peliculas/", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(pelicula)
         });
-
         if (!respuesta.ok) {
             alert("Error al guardar la película");
             return;
         }
-
         alert("Película guardada correctamente");
-
         document.getElementById("formPelicula").reset();
-        generosSeleccionados = [];
+        generosElegidos = [];
         mostrarGeneros();
-
         cargarPeliculas();
-
     } catch (error) {
         console.log(error);
         alert("No se pudo conectar con el servidor");
     }
 }
 
-// Obtener nombres de los géneros
 function obtenerGeneros(pelicula) {
-    if (!pelicula.generos || pelicula.generos.length === 0) {
-        return "Sin géneros";
+    let generos = pelicula.generos || [];
+    let nombres = [];
+    for (let i = 0; i < generos.length; i++) {
+        nombres.push(generos[i].nombre);
     }
-
-    return pelicula.generos.map(function(genero) {
-        return typeof genero === "object" ? genero.nombre : genero;
-    }).join(", ");
+    return nombres.join(", ") || "Sin géneros";
 }
 
-// Mostrar películas
 function mostrarPeliculas(lista) {
-    let contenedor = document.getElementById("peliculas");
-    contenedor.innerHTML = "";
-
-    if (lista.length === 0) {
-        contenedor.innerHTML = "<p>No se encontraron películas.</p>";
-        return;
-    }
-
-    lista.forEach(function(pelicula) {
-        let tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta";
-
-        tarjeta.innerHTML = `
-            <img src="${pelicula.portada}" alt="Portada">
-            <h3>${pelicula.titulo}</h3>
-            <p>Año: ${pelicula.anio}</p>
-            <p>Director: ${pelicula.director || "No especificado"}</p>
-            <p>Géneros: ${obtenerGeneros(pelicula)}</p>
-            <a href="../Pelicula/index.html?id=${encodeURIComponent(pelicula.id)}">
-                Ver película y reseñas
-            </a>
-        `;
-
-        if (localStorage.getItem("idUsuario")) {
-            let botonEditar = document.createElement("button");
-            botonEditar.textContent = "Editar";
-
-            botonEditar.addEventListener("click", function() {
-                window.location.href = "Editar/index.html?id=" + encodeURIComponent(pelicula.id);
-            });
-
-            let botonEliminar = document.createElement("button");
-            botonEliminar.textContent = "Eliminar";
-
-            botonEliminar.addEventListener("click", function() {
-                eliminarPelicula(pelicula.id);
-            });
-
-            tarjeta.appendChild(botonEditar);
-            tarjeta.appendChild(botonEliminar);
+    let html = "";
+    let registrado = localStorage.getItem("idUsuario");
+    for (let i = 0; i < lista.length; i++) {
+        let p = lista[i];
+        let botones = "";
+        if (registrado) {
+            botones = `<button onclick="editarPelicula('${p.id}')">Editar</button>
+            <button onclick="eliminarPelicula('${p.id}')">Eliminar</button>`;
         }
-
-        contenedor.appendChild(tarjeta);
-    });
+        html += `
+            <div class="tarjeta">
+                <img src="${p.portada}" alt="Portada">
+                <h3>${p.titulo}</h3>
+                <p>Año: ${p.anio}</p>
+                <p>Director: ${p.director || "No especificado"}</p>
+                <p>Géneros: ${obtenerGeneros(p)}</p>
+                <a href="../Pelicula/index.html?id=${encodeURIComponent(p.id)}">Ver película y reseñas</a>
+                ${botones}
+            </div>
+        `;
+    }
+    if (html === "") {
+        html = "<p>No se encontraron películas.</p>";
+    }
+    document.getElementById("peliculas").innerHTML = html;
 }
 
-// Buscar películas
+function editarPelicula(id) {
+    window.location.href = "Editar/index.html?id=" + encodeURIComponent(id);
+}
+
 function buscarPeliculas() {
     let texto = document.getElementById("buscar").value.toLowerCase();
     let genero = document.getElementById("generoFiltro").value;
-
-    let resultado = peliculasCargadas.filter(function(pelicula) {
-        let coincideTexto =
-            pelicula.titulo.toLowerCase().includes(texto) ||
-            (pelicula.director || "").toLowerCase().includes(texto);
-
-        let coincideGenero = genero === "" ||
-            (pelicula.generos || []).some(function(g) {
-                return String(typeof g === "object" ? g.id : g) === String(genero);
-            });
-
-        return coincideTexto && coincideGenero;
-    });
-
+    let resultado = [];
+    for (let i = 0; i < peliculasCargadas.length; i++) {
+        let p = peliculasCargadas[i];
+        let titulo = p.titulo.toLowerCase();
+        let director = (p.director || "").toLowerCase();
+        let textoOk = titulo.includes(texto) || director.includes(texto);
+        let generoOk = genero === "";
+        let generos = p.generos || [];
+        for (let j = 0; j < generos.length; j++) {
+            if (String(generos[j].id) === String(genero)) {
+                generoOk = true;
+            }
+        }
+        if (textoOk && generoOk) {
+            resultado.push(p);
+        }
+    }
     mostrarPeliculas(resultado);
 }
 
-// Cargar películas
 async function cargarPeliculas() {
     try {
         let respuesta = await fetch(API_URL + "/peliculas/");
-
-        if (!respuesta.ok) {
-            throw new Error("Error al cargar películas");
-        }
-
         peliculasCargadas = await respuesta.json();
         buscarPeliculas();
-
     } catch (error) {
-        console.log(error);
-        document.getElementById("peliculas").innerHTML =
-            "<p>No se pudieron cargar las películas.</p>";
+        console.log("ERROR:", error);
+        document.getElementById("peliculas").innerHTML = "<p>No se pudieron cargar las películas.</p>";
     }
 }
 
-// Eliminar película
 async function eliminarPelicula(id) {
-    if (!localStorage.getItem("idUsuario")) {
-        alert("Tenés que registrarte primero");
+    if (!confirm("¿Querés eliminar esta película?")) {
         return;
     }
-
-    let confirmar = confirm("¿Querés eliminar esta película?");
-
-    if (!confirmar) {
-        return;
-    }
-
     try {
-        let respuesta = await fetch(API_URL + "/peliculas/" + id, {
-            method: "DELETE"
-        });
-
-        if (!respuesta.ok) {
-            alert("No se pudo eliminar la película");
-            return;
-        }
-
+        await fetch(API_URL + "/peliculas/" + id, { method: "DELETE" });
         alert("Película eliminada correctamente");
         cargarPeliculas();
-
     } catch (error) {
         console.log(error);
-        alert("Error al conectar con el servidor");
+        alert("No se pudo conectar con el servidor");
     }
 }
 
-// Iniciar
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     comprobarUsuario();
-
     document.getElementById("formPelicula").addEventListener("submit", agregarPelicula);
     document.getElementById("btnAgregarGenero").addEventListener("click", agregarGenero);
     document.getElementById("btnBuscar").addEventListener("click", buscarPeliculas);
-    document.getElementById("buscar").addEventListener("keyup", buscarPeliculas);
     document.getElementById("generoFiltro").addEventListener("change", buscarPeliculas);
-
+    document.getElementById("estadoUsuario").addEventListener("click", cerrarSesion);
+    document.getElementById("buscar").addEventListener("input", function () {
+        if (document.getElementById("buscar").value === "") {
+            buscarPeliculas();
+        }
+    });
     cargarGeneros();
     cargarPeliculas();
 });

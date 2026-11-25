@@ -1,20 +1,22 @@
-
 const API_URL = "http://127.0.0.1:8000";
 
 let idPelicula = new URLSearchParams(window.location.search).get("id");
-let generosSeleccionados = [];
+let generosElegidos = [];
 
-// Cargar los datos de la película
+// Trae la pelicula y completa el formulario
 async function cargarPelicula() {
     try {
         let respuesta = await fetch(API_URL + "/peliculas/");
         let peliculas = await respuesta.json();
 
-        let pelicula = peliculas.find(function(p) {
-            return String(p.id) === String(idPelicula);
-        });
+        let pelicula = null;
+        for (let i = 0; i < peliculas.length; i++) {
+            if (String(peliculas[i].id) === String(idPelicula)) {
+                pelicula = peliculas[i];
+            }
+        }
 
-        if (!pelicula) {
+        if (pelicula === null) {
             alert("No se encontró la película");
             window.location.href = "../index.html";
             return;
@@ -26,37 +28,33 @@ async function cargarPelicula() {
         document.getElementById("director").value = pelicula.director || "";
         document.getElementById("sinopsis").value = pelicula.sinopsis || "";
 
-        generosSeleccionados = pelicula.generos || [];
-
+        generosElegidos = pelicula.generos || [];
         mostrarGeneros();
-
     } catch (error) {
         console.log(error);
         alert("No se pudo cargar la película");
     }
 }
 
-// Cargar géneros disponibles
+// Carga los generos en el select
 async function cargarGeneros() {
     try {
         let respuesta = await fetch(API_URL + "/genero/");
         let generos = await respuesta.json();
-
         let selector = document.getElementById("genero");
 
-        generos.forEach(function(genero) {
+        for (let i = 0; i < generos.length; i++) {
             let opcion = document.createElement("option");
-            opcion.value = genero.id;
-            opcion.textContent = genero.nombre;
+            opcion.value = generos[i].id;
+            opcion.textContent = generos[i].nombre;
             selector.appendChild(opcion);
-        });
-
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
-// Agregar un género
+// Agrega un genero mas a la pelicula
 function agregarGenero() {
     let selector = document.getElementById("genero");
     let id = selector.value;
@@ -66,50 +64,44 @@ function agregarGenero() {
         return;
     }
 
-    let existe = generosSeleccionados.some(function(g) {
-        return String(typeof g === "object" ? g.id : g) === String(id);
-    });
-
-    if (existe) {
-        alert("Ese género ya está agregado");
-        return;
+    for (let i = 0; i < generosElegidos.length; i++) {
+        if (String(generosElegidos[i].id) === String(id)) {
+            alert("Ese género ya está agregado");
+            return;
+        }
     }
 
-    generosSeleccionados.push({
-        id: id,
-        nombre: selector.options[selector.selectedIndex].text
-    });
+    let nombre = selector.options[selector.selectedIndex].text;
+    generosElegidos.push({ id: id, nombre: nombre });
 
     mostrarGeneros();
     selector.value = "";
 }
 
-// Mostrar los géneros
+// Dibuja los generos que tiene la pelicula
 function mostrarGeneros() {
     let lista = document.getElementById("listaGeneros");
     lista.innerHTML = "";
 
-    generosSeleccionados.forEach(function(genero, indice) {
-        let nombre = typeof genero === "object" ? genero.nombre : genero;
-
-        let elemento = document.createElement("div");
-        elemento.textContent = nombre;
+    for (let i = 0; i < generosElegidos.length; i++) {
+        let fila = document.createElement("div");
+        fila.textContent = generosElegidos[i].nombre;
 
         let boton = document.createElement("button");
         boton.type = "button";
         boton.textContent = "Quitar";
 
-        boton.addEventListener("click", function() {
-            generosSeleccionados.splice(indice, 1);
+        boton.addEventListener("click", function () {
+            generosElegidos.splice(i, 1);
             mostrarGeneros();
         });
 
-        elemento.appendChild(boton);
-        lista.appendChild(elemento);
-    });
+        fila.appendChild(boton);
+        lista.appendChild(fila);
+    }
 }
 
-// Guardar los cambios
+// Guarda los cambios
 async function guardarCambios(event) {
     event.preventDefault();
 
@@ -118,23 +110,24 @@ async function guardarCambios(event) {
         return;
     }
 
+    let idsGeneros = [];
+    for (let i = 0; i < generosElegidos.length; i++) {
+        idsGeneros.push(generosElegidos[i].id);
+    }
+
     let pelicula = {
         titulo: document.getElementById("titulo").value,
         anio: Number(document.getElementById("anio").value),
         portada: document.getElementById("portada").value,
         director: document.getElementById("director").value,
         sinopsis: document.getElementById("sinopsis").value,
-        generos: generosSeleccionados.map(function(g) {
-            return typeof g === "object" ? g.id : g;
-        })
+        generos: idsGeneros
     };
 
     try {
         let respuesta = await fetch(API_URL + "/peliculas/" + idPelicula, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(pelicula)
         });
 
@@ -145,15 +138,14 @@ async function guardarCambios(event) {
 
         alert("Película actualizada correctamente");
         window.location.href = "../index.html";
-
     } catch (error) {
         console.log(error);
         alert("No se pudo conectar con el servidor");
     }
 }
 
-// Iniciar
-document.addEventListener("DOMContentLoaded", function() {
+// Arranca la pagina
+document.addEventListener("DOMContentLoaded", function () {
     if (!localStorage.getItem("idUsuario")) {
         alert("Tenés que registrarte para editar películas");
         window.location.href = "../../Registro/index.html";
