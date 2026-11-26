@@ -2,7 +2,6 @@ const API_URL = "http://127.0.0.1:8000";
 
 let idPelicula = new URLSearchParams(window.location.search).get("id");
 let generosElegidos = [];
-
 // Trae la pelicula y completa el formulario
 async function cargarPelicula() {
     try {
@@ -18,19 +17,16 @@ async function cargarPelicula() {
                 pelicula = peliculas[i];
             }
         }
-
         if (pelicula === null) {
             alert("No se encontró la película");
             window.location.href = "../index.html";
             return;
         }
-
         document.getElementById("titulo").value = pelicula.titulo;
         document.getElementById("anio").value = pelicula.anio;
         document.getElementById("portada").value = pelicula.portada;
         document.getElementById("director").value = pelicula.director || "";
         document.getElementById("sinopsis").value = pelicula.sinopsis || "";
-
         generosElegidos = pelicula.generos || [];
         mostrarGeneros();
     } catch (error) {
@@ -59,31 +55,25 @@ async function cargarGeneros() {
         console.log(error);
     }
 }
-
 // Agrega un genero mas a la pelicula
 function agregarGenero() {
     let selector = document.getElementById("genero");
     let id = selector.value;
-
     if (id === "") {
         alert("Seleccioná un género");
         return;
     }
-
     for (let i = 0; i < generosElegidos.length; i++) {
         if (String(generosElegidos[i].id) === String(id)) {
             alert("Ese género ya está agregado");
             return;
         }
     }
-
     let nombre = selector.options[selector.selectedIndex].text;
     generosElegidos.push({ id: id, nombre: nombre });
-
     mostrarGeneros();
     selector.value = "";
 }
-
 // Dibuja los generos que tiene la pelicula
 function mostrarGeneros() {
     let lista = document.getElementById("listaGeneros");
@@ -106,21 +96,17 @@ function mostrarGeneros() {
         lista.appendChild(fila);
     }
 }
-
 // Guarda los cambios
 async function guardarCambios(event) {
     event.preventDefault();
-
     if (!localStorage.getItem("idUsuario")) {
         alert("Tenés que registrarte para editar");
         return;
     }
-
     let idsGeneros = [];
     for (let i = 0; i < generosElegidos.length; i++) {
         idsGeneros.push(generosElegidos[i].id);
     }
-
     let pelicula = {
         titulo: document.getElementById("titulo").value,
         anio: Number(document.getElementById("anio").value),
@@ -129,19 +115,16 @@ async function guardarCambios(event) {
         sinopsis: document.getElementById("sinopsis").value,
         generos: idsGeneros
     };
-
     try {
         let respuesta = await fetch(API_URL + "/peliculas/" + idPelicula, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(pelicula)
         });
-
         if (!respuesta.ok) {
             alert("No se pudieron guardar los cambios");
             return;
         }
-
         alert("Película actualizada correctamente");
         window.location.href = "../index.html";
     } catch (error) {
@@ -149,7 +132,6 @@ async function guardarCambios(event) {
         alert("No se pudo conectar con el servidor");
     }
 }
-
 // Arranca la pagina
 document.addEventListener("DOMContentLoaded", function () {
     if (!localStorage.getItem("idUsuario")) {
@@ -157,10 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "../../Registro/index.html";
         return;
     }
-
     document.getElementById("formEditar").addEventListener("submit", guardarCambios);
     document.getElementById("btnAgregarGenero").addEventListener("click", agregarGenero);
-
     cargarGeneros();
     cargarPelicula();
 });

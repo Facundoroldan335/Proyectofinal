@@ -27,7 +27,6 @@ async function registrarUsuario(event) {
         alert("No se pudo conectar con el servidor");
     }
 }
-
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("formRegistro").addEventListener("submit", registrarUsuario);
 });
