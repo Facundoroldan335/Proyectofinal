@@ -1,109 +1,84 @@
-/* estilos del registro */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
-    background: black;
+    background-color: black;
     color: white;
     font-family: Arial, sans-serif;
 }
-
-/* barra de arriba */
-
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 28px;
-    background: dimgray;
+    background-color: dimgray;
     border-bottom: 2px solid red;
 }
-
 header h1 {
     color: red;
     font-size: 25px;
 }
-
 header p {
     color: lightgray;
     font-size: 14px;
 }
-
 main {
     width: 90%;
     max-width: 440px;
     margin: 30px auto;
 }
-
 .registro h2 {
     margin-bottom: 10px;
     color: red;
     text-align: center;
 }
-
 .registro p {
     margin-bottom: 16px;
     color: lightgray;
     font-size: 14px;
     text-align: center;
 }
-
-/* el formulario */
-
 #formRegistro {
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 22px;
-    background: dimgray;
+    background-color: dimgray;
     border: 1px solid darkgray;
     border-radius: 10px;
 }
-
 input {
     padding: 10px;
-    background: gray;
+    background-color: gray;
     color: white;
     border: 1px solid silver;
     border-radius: 8px;
     font-family: Arial, sans-serif;
     font-size: 14px;
 }
-
 button {
     padding: 10px;
-    background: red;
+    background-color: red;
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
 }
-
-button:hover {
-    background: darkred;
-}
-
 .campo {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
-
 label {
     color: lightgray;
     font-size: 14px;
 }
-
-/* pie */
-
 footer {
     margin-top: 35px;
     padding: 18px;
-    background: dimgray;
+    background-color: dimgray;
     text-align: center;
     color: silver;
     font-size: 13px;
