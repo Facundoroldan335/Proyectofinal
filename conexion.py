@@ -13,7 +13,6 @@ DATABASE_URL = f"postgresql://postgres.cndxmjthhzwlkgabbrts:{PASSWORD}@aws-0-us-
 
 def getConexion():
     conexion = psycopg.connect(DATABASE_URL, row_factory=dict_row)
-
     try:
         yield conexion
     finally:
